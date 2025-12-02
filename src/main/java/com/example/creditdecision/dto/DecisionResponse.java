@@ -1,8 +1,10 @@
-
 package com.example.creditdecision.dto;
 
+import lombok.Data;
+
+@Data // Gera Getters e Setters
 public class DecisionResponse {
-    public String cpf;
-    public String resultado;
-    public Double limite;
+    private String cpf;
+    private String resultado;
+    private Double limite;
 }
