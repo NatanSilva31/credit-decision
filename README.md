@@ -6,7 +6,7 @@
 ![Maven](https://img.shields.io/badge/Maven-Build-blue)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-API criada para realizar a análise simples de solicitações de crédito, aplicando regras objetivas baseadas em renda, score, valor solicitado e histórico de inadimplência. Projeto desenvolvido para fins de avaliação técnica.
+API criada para realizar a análise simples de solicitações de crédito, aplicando regras objetivas baseadas principalmente no **Score** de crédito do cliente. Projeto desenvolvido para fins de avaliação técnica.
 
 ---
 
@@ -17,8 +17,8 @@ Demonstrar domínio de:
 - Estruturação de APIs REST  
 - Boas práticas (Clean Architecture simplificada, DTOs, Services)  
 - Persistência com JPA/H2  
-- Testes unitários com JUnit/Mockito  
-- Organização e clareza no código  
+- Validações com Bean Validation (@Valid)
+- Documentação e tratamento de erros
 
 ---
 
@@ -27,7 +27,7 @@ Demonstrar domínio de:
 A aplicação segue uma arquitetura em camadas para desacoplar as responsabilidades:
 
 - **Controller:** Camada de entrada (REST), validação de DTOs e resposta HTTP.
-- **Service:** Regras de negócio (lógica de aprovação de crédito).
+- **Service:** Regras de negócio (Cálculo de limite e aprovação baseado em Score).
 - **Repository:** Interface de comunicação com o banco de dados.
 - **Domain/Model:** Entidades do banco de dados.
 
@@ -35,15 +35,12 @@ A aplicação segue uma arquitetura em camadas para desacoplar as responsabilida
 
 ```mermaid
 flowchart TD
-    A[Início] --> B[Recebe solicitação]
-    B --> C{Score < 600?}
-    C -->|Sim| F[Negado]
-    C -->|Não| D{Possui dívidas?}
-    D -->|Sim| F[Negado]
-    D -->|Não| E{Valor > 8x renda?}
-    E -->|Sim| F[Negado]
-    E -->|Não| G[Aprovado]
-
+    A[Início] --> B[Recebe CPF e Score]
+    B --> C{Score < 400?}
+    C -->|Sim| D[Negado]
+    C -->|Não| E{Score < 700?}
+    E -->|Sim| F[Aprovado - Limite Básico]
+    E -->|Não| G[Aprovado - Limite Alto]
 ```
 
 ## 🚀 Como Rodar o Projeto
