@@ -1,5 +1,5 @@
 # Credit Decision API  
-**Java 17 • Spring Boot 3 • REST API • H2 Database • Clean Architecture (Simplificada)**
+**Java 17 • Spring Boot • REST API • H2 Database • Clean Architecture (Simplificada)**
 
 ![Java](https://img.shields.io/badge/Java-17-red)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0-brightgreen)
