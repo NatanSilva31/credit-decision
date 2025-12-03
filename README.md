@@ -2,7 +2,7 @@
 **Java 17 • Spring Boot 3 • REST API • H2 Database • Clean Architecture (Simplificada)**
 
 ![Java](https://img.shields.io/badge/Java-17-red)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-brightgreen)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0-brightgreen)
 ![Maven](https://img.shields.io/badge/Maven-Build-blue)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
