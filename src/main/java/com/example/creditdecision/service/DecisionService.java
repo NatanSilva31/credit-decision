@@ -46,7 +46,7 @@ public class DecisionService {
             mensagem = "Aprovado! Limite premium disponível de R$ 2.000.";
         }
 
-        log.info("Resultado da análise: {} | Score: {} | Limite: {}", resultado, request.getScore(), limite);
+        log.info("Resultado da analise: {} | Score: {} | Limite: {}", resultado, request.getScore(), limite);
 
         // ======= Salvar no banco =======
         Decision decision = new Decision();
