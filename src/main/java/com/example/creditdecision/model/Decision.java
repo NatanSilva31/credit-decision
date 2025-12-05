@@ -3,8 +3,8 @@ package com.example.creditdecision.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class Decision {
 
     @Id
@@ -12,8 +12,12 @@ public class Decision {
     private Long id;
 
     private String cpf;
+
     private Double rendaMensal;
+
     private Integer score;
+
     private String resultado;
+
     private Double limite;
 }

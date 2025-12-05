@@ -4,44 +4,51 @@ import com.example.creditdecision.dto.DecisionRequest;
 import com.example.creditdecision.dto.DecisionResponse;
 import com.example.creditdecision.model.Decision;
 import com.example.creditdecision.repository.DecisionRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Slf4j // 1. Habilita logs para auditoria
-@RequiredArgsConstructor // 2. Cria o construtor automaticamente para injeção segura
+@Slf4j
+@RequiredArgsConstructor
 public class DecisionService {
 
-    private final DecisionRepository repository; // 'final' torna a dependência obrigatória
+    private final DecisionRepository repository;
 
-    @Transactional // 3. Abre uma transação no banco de dados
+    @Transactional
     public DecisionResponse process(DecisionRequest request) {
-        // Log de entrada
-        log.info("Iniciando análise de crédito para o CPF: {}", request.getCpf());
+
+        log.info("Iniciando análise de crédito para CPF: {}", request.getCpf());
 
         String resultado;
         Double limite;
+        String mensagem;
 
-        // Lógica de Negócio
-        if (request.getScore() < 400){
+        // ======= Lógica de Score =======
+        if (request.getScore() < 400) {
             resultado = "NEGADO";
             limite = 0.0;
-        } else if (request.getScore() < 700){
+            mensagem = "Solicitação negada. O score informado está abaixo do mínimo permitido.";
+        }
+        else if (request.getScore() < 700) {
             resultado = "APROVADO";
             limite = 1000.0;
-        } else {
+            mensagem = "Aprovado com limite básico de R$ 1.000.";
+        }
+        else {
             resultado = "APROVADO";
             limite = 2000.0;
+            mensagem = "Aprovado! Limite premium disponível de R$ 2.000.";
         }
 
-        // Log de processamento
-        log.info("Score {} processado. Resultado: {}", request.getScore(), resultado);
+        log.info("Resultado da análise: {} | Score: {} | Limite: {}", resultado, request.getScore(), limite);
 
-        // Montagem da Entidade para salvar no banco
+        // ======= Salvar no banco =======
         Decision decision = new Decision();
         decision.setCpf(request.getCpf());
         decision.setRendaMensal(request.getRendaMensal());
@@ -50,13 +57,14 @@ public class DecisionService {
         decision.setLimite(limite);
 
         repository.save(decision);
-        log.info("Decisão salva no banco com ID: {}", decision.getId());
+        log.info("Decisão registrada no banco com ID: {}", decision.getId());
 
-        // Montagem da Resposta para a API
+        // ======= Retorno para API =======
         DecisionResponse response = new DecisionResponse();
         response.setCpf(request.getCpf());
         response.setResultado(resultado);
         response.setLimite(limite);
+        response.setMensagem(mensagem);
 
         return response;
     }
