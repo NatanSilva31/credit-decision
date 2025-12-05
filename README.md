@@ -74,11 +74,9 @@ Envia os dados do cliente para o motor de decisão.
 ```json
 {
   "customerName": "João da Silva",
-  "cpf": "123.456.789-00",
-  "income": 5000.00,
-  "requestedAmount": 20000.00,
-  "score": 750,
-  "hasDebts": false
+  "cpf": "12345678900",
+  "rendaMensal": 25.0000,
+  "score": 750
 }
 ```
 
@@ -87,16 +85,19 @@ Envia os dados do cliente para o motor de decisão.
 - **✅ 200 OK (Aprovado):**
 ```json
 {
-  "status": "APPROVED",
-  "message": "Crédito aprovado com sucesso."
+    "cpf": "12345678900",
+    "resultado": "APROVADO",
+    "limite": 2000.0
 }
 ```
 
 - **❌ 200 OK (Negado):**
 ```json
 {
-  "status": "DENIED",
-  "message": "Crédito negado. Motivo: Renda insuficiente para o valor solicitado."
+    "cpf": "12345678900",
+    "resultado": "NEGADO",
+    "limite": 0.0,
+    "mensagem": "Solicitação negada. O score informado está abaixo do mínimo permitido."
 }
 ```
 
